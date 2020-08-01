@@ -1,23 +1,31 @@
-import cv2 as cv
+# import cv2 as cv
 import os
+import numpy as np
 import torch
 
-# img = cv.imread('angry0.jpg', cv.IMREAD_GRAYSCALE)
-# cv.imshow('Image', img)
+def get_train_images_path(path, emotion):
+    images_path = os.path.join(".", path, emotion)
+    return images_path
 
-# cv.waitKey(0)
-# cv.destroyAllWindows()
+def get_data(category="train"):
+    X = []
+    y= []
+    if category == "train":
+        path = "images\\train"
+    else:
+        path = "images\\validation"
+    for emotion in  os.listdir(os.path.join(".", path)):
+        images_path = get_train_images_path(path, emotion)
+        for image in os.listdir(images_path):
+            #X.append(cv.imread(os.path.join(images_path, image), cv.IMREAD_GRAYSCALE))
+            y.append(emotion)
+    return X, y
 
-# tensor = torch.tensor(img)
-# print(tensor.size(0))
-# print(tensor.view(tensor.size(0), -1))
+X_train, y_train = get_data("train")
+print("X shape(training data): ", np.shape(X_train))
+print("y shape(training data): ", np.shape(y_train))
 
-tensor = torch.tensor([[[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]] for x in range(9)])
-print(tensor)
-print(tensor.size(0))
-print(tensor.view(tensor.size(0), -1))
+X_validation, y_validation = get_data("validation")
+print("X shape(validation data): ", np.shape(X_validation))
+print("y shape(validation data): ", np.shape(y_validation))
 
-# y = torch.linspace(-1, 1, 100)
-# x = torch.unsqueeze(torch.linspace(-1, 1, 100), dim=1)
-# print(y)
-# print(x)
