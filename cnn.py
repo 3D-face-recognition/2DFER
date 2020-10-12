@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+import numpy as np
 
 class CNN(nn.Module):
     def __init__(self):
@@ -18,14 +19,28 @@ class CNN(nn.Module):
         self.conv2 = nn.Sequential(
             nn.Conv2d(16, 32, 5, 1, 2),
             nn.ReLU(),
-            nn.MaxPool2d(2) # 32*12*12
+            nn.MaxPool2d(2)  # 32*12*12
         )
-        self.out = nn.Linear(32 * 12 * 12, 7)
+
+        # self.conv3 = nn.Sequential(
+        #     nn.Conv2d(32, 64, 5, 1, 2),
+        #     nn.ReLU(),
+        #     nn.MaxPool2d(2)
+        # )
+
+        self.out1 = nn.Linear(32 * 12 * 12, 144)
+        self.out2 = nn.Linear(144, 7)
+        # self.out1 = nn.Linear(64 * 6 * 6, 7)
+        # self.out2 = nn.Linear(128, 7)
 
     def forward(self, x):
-        x = torch.tensor(x, dtype=torch.float32)
+        # x = np.expand_dims(x, 1)
+        # x = torch.tensor(x, dtype=torch.float32)
         x = self.conv1(x)
         x = self.conv2(x)
+        # x = self.conv3(x)
         x = x.view(x.size(0), -1)
-        output = self.out(x)
+        # x = self.out1(x)
+        x = self.out1(x)
+        output = self.out2(x)
         return output
