@@ -14,12 +14,16 @@ from sklearn.metrics import accuracy_score
 
 from data_provider import DataProvider
 from ck_data_provider import CK_DataProvider
+from fer2013_data_provider import FER2013_DataProvider
+np.set_printoptions(threshold=np.inf)
 
 LEARNING_RATE = 0.01
 BATCH_SIZE = 50
 EPOCH = 30
+# WEIGHT_DECAY = 0.05
 
-data_provider = CK_DataProvider(BATCH_SIZE, 0)
+# data_provider = CK_DataProvider(BATCH_SIZE, 0)
+data_provider = FER2013_DataProvider(BATCH_SIZE, 0)
 
 cnn = CNN()
 cnn_model = TrainModel(data_provider, LEARNING_RATE, EPOCH)

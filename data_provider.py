@@ -12,11 +12,12 @@ class DataProvider():
         self._label_encoder = LabelEncoder()
 
         self._train_data = self.__get_data__('train')
+        # print(self.y_train)
         self._y_train_encoded = self._label_encoder.fit_transform(self.y_train)
         self._train_dataset = \
             Data.TensorDataset(self.x_train, torch.from_numpy(self.y_train_encoded))
-
         self._validation_data = self.__get_data__('validation')
+        # print(self.y_validation)
         self._y_validation_encoded = self._label_encoder.fit_transform(self.y_validation)
         self._validation_dataset = \
             Data.TensorDataset(self.x_validation, torch.from_numpy(self.y_validation_encoded))
